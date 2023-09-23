@@ -2,11 +2,17 @@ import axios from "@/lib/axios";
 import { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
 import Credentials from "next-auth/providers/credentials";
-
+import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 export const authOptions: NextAuthOptions = {
   jwt: {},
   providers: [
     Credentials({
+      name: "Ce",
+      credentials: {
+        username: { label: "Username", type: "text", placeholder: "jsmith" },
+        password: { label: "Password", type: "password" },
+      },
       async authorize(credentials, req) {
         if (!credentials?.username || !credentials.password) return null;
         const { username, password } = credentials;
@@ -36,3 +42,4 @@ export const authOptions: NextAuthOptions = {
 
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
+  
