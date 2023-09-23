@@ -105,3 +105,9 @@ a {
     color-scheme: dark;
   }
 }
+.ant-input:focus {
+  border-color: #00695c !important;
+  outline: 0 !important;
+  /* -webkit-box-shadow: 0 0 0 2px rgba(87,168,233, .2);
+  box-shadow: 0 0 0 2px rgba(87,168,233, .2); */
+}
