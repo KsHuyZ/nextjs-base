@@ -13,17 +13,12 @@ export default function LoginComponent() {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState<boolean>(false)
 
-    const login = async () => {
-        try {
-            // let res = await LoginAPI(credentails.email, credentails.password);
-            // localStorage.setItem("userEmail", res.user.email);
-            router.push("/home");
-        } catch (err) {
-            console.log(err);
-        }
-    };
     const onFinish = (values: any) => {
         console.log('Success:', values);
+        setLoading(true)
+        setTimeout(() => {
+            setLoading(false)
+        }, 2000)
     };
     return (
 
@@ -34,34 +29,41 @@ export default function LoginComponent() {
                 </Row>
             </Header>
             <Row align="middle" justify={"center"}>
-                <Col>
+                <Col xs={6} lg={9} sm={12}>
                     <Card
                         bordered={false}
-                        style={{ width: 500, boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px" }}
+                        style={{ boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px" }}
                     >
                         <h1>Sign in</h1>
                         <p className="sub-heading">Stay updated on your professional world</p>
                         <Form form={form} onFinish={onFinish}>
                             <Form.Item
                                 name={"email"}
-                                rules={[{ required: true, message: 'Please input your email!' }]}
+                            rules={[{ required: true, message: 'Please input your email!' }]}
+
                             >
-                                <Input placeholder="Email or Phone" prefix={<MailOutlined />} size="large" />
+                                <Input placeholder="Email or Phone" disabled={loading} prefix={<MailOutlined />} size="large" />
                             </Form.Item>
                             <Form.Item
                                 name={"password"}
-                                rules={[{ required: true, message: 'Please input your password!' }]}>
+                                rules={[{ required: true, message: 'Please input your password!' }]}
+                            >
                                 <Input.Password
                                     placeholder="Password"
                                     size="large"
                                     prefix={<LockOutlined />}
+                                    disabled={loading}
                                 />
                             </Form.Item>
                             <Form.Item>
                                 <LinkButton title="Forgot Password?" />
                             </Form.Item>
                             <Form.Item>
-                                <Button type="primary" htmlType="submit" title="Sign In" />
+                                <Row>
+                                    <Col span={24} >
+                                        <Button type="primary" htmlType="submit" title="Sign In" style={{ width: '100%' }} loading={loading} />
+                                    </Col>
+                                </Row>
                             </Form.Item>
                         </Form>
 

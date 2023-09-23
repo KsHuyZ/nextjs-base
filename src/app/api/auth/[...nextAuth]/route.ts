@@ -1,13 +1,12 @@
 import axios from "@/lib/axios";
 import { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
-import Credentials from "next-auth/providers/credentials";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 export const authOptions: NextAuthOptions = {
   jwt: {},
   providers: [
-    Credentials({
+    CredentialsProvider({
       name: "Ce",
       credentials: {
         username: { label: "Username", type: "text", placeholder: "jsmith" },
