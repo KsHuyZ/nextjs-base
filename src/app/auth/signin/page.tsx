@@ -1,14 +1,18 @@
+"use client"
 import React, { useState } from "react";
-import { useRouter } from 'next/router'
-import Image from 'next/image'
-import { Card, Layout, Space, Row, Input, Form, Col } from "antd";
-import psyduck from "@/assets/images/psyduck.png"
+import { useRouter } from 'next/navigation'
+import { Card, Layout, Space, Row, Input, Form, Col, Button as AntButton, Typography } from "antd";
+import { GithubIcon, GoogleIcon } from "@/assets/icons";
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import { Button, LinkButton } from "@/components/Button/CustomButton";
+import { validateEmail } from "@/utils";
+import Head from "next/head";
+import AuthLayout from "../components/AuthLayout";
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Title, Paragraph } = Typography
 
-export default function LoginComponent() {
+
+export default function LoginPage() {
     const router = useRouter()
     const [form] = Form.useForm();
     const [loading, setLoading] = useState<boolean>(false)
@@ -21,25 +25,26 @@ export default function LoginComponent() {
         }, 2000)
     };
     return (
-
-        <Space direction="vertical" style={{ width: '100%' }} size={[0, 48]}  >
-            <Header style={{ backgroundColor: 'transparent' }}>
-                <Row>
-                    <Image src={psyduck} alt="" width={100} height={100} />
-                </Row>
-            </Header>
+        <AuthLayout>
             <Row align="middle" justify={"center"}>
+                <Head>
+                    <title>Sign In</title>
+                    <meta name="description" content="Hihihhhhihihihihi"/>
+                </Head>
                 <Col xs={6} lg={9} sm={12}>
                     <Card
                         bordered={false}
                         style={{ boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px" }}
                     >
-                        <h1>Sign in</h1>
-                        <p className="sub-heading">Stay updated on your professional world</p>
+                        <Title>Sign in</Title>
+                        <Space>
+                            <Paragraph className="sub-heading">Stay updated on your professional world</Paragraph>
+                        </Space>
                         <Form form={form} onFinish={onFinish}>
+
                             <Form.Item
                                 name={"email"}
-                            rules={[{ required: true, message: 'Please input your email!' }]}
+                                rules={[{ required: true, message: 'Please input your email!' }, { validator: validateEmail },]}
 
                             >
                                 <Input placeholder="Email or Phone" disabled={loading} prefix={<MailOutlined />} size="large" />
@@ -68,18 +73,25 @@ export default function LoginComponent() {
                         </Form>
 
                         <hr className="hr-text" data-content="or" />
-                        <div className="google-btn-container">
-                            <p className="go-to-signup">
-                                New to App?
-                                <span onClick={() => router.push("/register")}>
-                                    Join now
-                                </span>
-                            </p>
-                        </div>
+                        <Row style={{ margin: '10px 0' }}>
+                            <AntButton type="default" icon={<GoogleIcon />} style={{ width: '100%' }} loading={loading}>Sign in with Google</AntButton>
+                        </Row>
+                        <Row style={{ margin: '10px 0' }}>
+                            <AntButton type="default" icon={<GithubIcon />} style={{ width: '100%' }} loading={loading}>Sign in with Github</AntButton>
+                        </Row>
+                        <Row style={{ margin: '10px 0' }} justify={"center"}>
+                            <Col>
+                                <Space>  New to App?
+                                    <LinkButton onClick={() => router.push("/register")} title="Join now" />
+                                </Space>
+                            </Col>
+
+                        </Row>
+
                     </Card>
 
                 </Col>
             </Row>
-        </Space >
+        </AuthLayout>
     );
 }

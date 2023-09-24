@@ -15,7 +15,7 @@ export const Button = ({ title, style, ...props }: CustomButtonProps) => {
 }
 export const LinkButton = ({ title, style, ...props }: CustomButtonProps) => {
     return (
-        <AntButton type='link' style={{ color: '#00695c', padding: 0, ...style }} {...props}>
+        <AntButton type='link' style={{ color: '#00695c', padding: 0, fontWeight: 'bold', ...style }} {...props}>
             {title}
         </AntButton>
     )
